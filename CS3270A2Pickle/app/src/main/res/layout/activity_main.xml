@@ -85,7 +85,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/btnLoadFragment4"/>
+            android:text="@string/btnLoadFragment3"/>
     </LinearLayout>
 
     <LinearLayout
@@ -99,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:text="@string/btnLoadFragment3"
+            android:text="@string/btnLoadFragment4"
             tools:ignore="RtlHardcoded"/>
 
         <Button
