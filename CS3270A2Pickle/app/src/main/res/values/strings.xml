@@ -3,7 +3,7 @@
     <string name="btnLoadFragment2">Load Fragment 2</string>
     <string name="btnLoadFragment3">Load Fragment 3</string>
     <string name="btnLoadFragment4">Load Fragment 4</string>
-    <string name="btnSwitch3And4">Switch 3 $ 4</string>
+    <string name="btnSwitch3And4">Switch 3 &amp; 4</string>
     <string name="fragment_a">Fragment A</string>
     <string name="fragment_b">Fragment B</string>
     <string name="fragment_c">Fragment C</string>
