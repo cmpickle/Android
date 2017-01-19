@@ -1,6 +1,7 @@
 package com.cmpickle.cs3270a2;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,14 @@ public class MainActivity extends Activity {
         btnSwitch3And4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragmentContainer3, new FragmentD(), "FD").replace(R.id.fragmentContainer4, new FragmentC(), "FC").addToBackStack(null).commit();
+                if(getFragmentManager().findFragmentById(R.id.fragmentContainer4) == null ||
+                        getFragmentManager().findFragmentById(R.id.fragmentContainer3) == null)
+                    return;
+                else if(getFragmentManager().findFragmentById(R.id.fragmentContainer4) instanceof FragmentD &&
+                        getFragmentManager().findFragmentById(R.id.fragmentContainer3) instanceof FragmentC)
+                    getFragmentManager().beginTransaction().replace(R.id.fragmentContainer3, new FragmentD(), "FD").replace(R.id.fragmentContainer4, new FragmentC(), "FC").addToBackStack(null).commit();
+                else
+                    getFragmentManager().beginTransaction().replace(R.id.fragmentContainer3, new FragmentC(), "FC").replace(R.id.fragmentContainer4, new FragmentD(), "FD").addToBackStack(null).commit();
             }
         });
     }
