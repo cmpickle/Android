@@ -40,7 +40,7 @@ public class PlayAgainDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity mainActivity = (MainActivity) getActivity();
-                        mainActivity.recreate();
+                        mainActivity.playAgain();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
