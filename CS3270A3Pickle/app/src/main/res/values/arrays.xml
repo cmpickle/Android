@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="choices">
+        <item name="str_rock">Rock</item>
+        <item name="str_paper">Paper</item>
+        <item name="str_scissors">Scissors</item>
+    </string-array>
+
+    <string-array name="results">
+        <item name="str_phone_wins">The Phone Wins</item>
+        <item name="str_me_wins">I Win</item>
+        <item name="str_tie">It\'s A Tie</item>
+    </string-array>
+</resources>
