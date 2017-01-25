@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.cmpickle.cs3270a4.TotalsFragment">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:text="@string/total_amount" />
+
+    <TextView
+        android:id="@+id/txv_amount_value"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textSize="24sp"
+        android:textAlignment="textEnd"
+        android:text="@string/default_value" />
+
+</LinearLayout>
