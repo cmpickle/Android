@@ -11,20 +11,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferences = getPreferences(Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("txvPhoneChoice", getResources().getString(R.string.placeholder));
-        editor.putString("txvMeChoice", getResources().getString(R.string.placeholder));
-        editor.putString("txvResult", "");
-        editor.putInt("intWinsPhone", 0);
-        editor.putInt("intWinsMe", 0);
-        editor.putString("txvPhoneScore", getResources().getString(R.string.default_value));
-        editor.putString("txvMeScore", getResources().getString(R.string.default_value));
-        editor.putBoolean("boolWinsPhoneFlag", false);
-        editor.putBoolean("boolWinsMeFlag", false);
-        editor.apply();
+        clearPreferences();
 
-        getFragmentManager().beginTransaction().add(R.id.topFragmentContainer, new TopFragment(), "top").add(R.id.bottomFragmentContainer, new BottomFragment(), "bottom").commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getFragmentManager().beginTransaction()
+                .add(R.id.topFragmentContainer, new TopFragment(), "top")
+                .add(R.id.bottomFragmentContainer, new BottomFragment(), "bottom")
+                .commit();
     }
 
     @Override
@@ -47,6 +45,12 @@ public class MainActivity extends Activity {
                 .replace(R.id.bottomFragmentContainer, new BottomFragment(), "bottom")
                 .remove(getFragmentManager().findFragmentByTag("playAgain"))
                 .commit();
+        clearPreferences();
+        getFragmentManager().findFragmentByTag("top").onResume();
+        getFragmentManager().findFragmentByTag("bottom").onResume();
+    }
+
+    public void clearPreferences() {
         SharedPreferences preferences = getPreferences(Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("txvPhoneChoice", getResources().getString(R.string.placeholder));
@@ -59,7 +63,5 @@ public class MainActivity extends Activity {
         editor.putBoolean("boolWinsPhoneFlag", false);
         editor.putBoolean("boolWinsMeFlag", false);
         editor.apply();
-        getFragmentManager().findFragmentByTag("top").onResume();
-        getFragmentManager().findFragmentByTag("bottom").onResume();
     }
 }

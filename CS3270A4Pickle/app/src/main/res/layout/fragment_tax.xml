@@ -24,14 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="textEnd"
-            android:text="@string/tax_rate_default" />
+            android:text="@string/tax_rate" />
 
         <TextView
             android:id="@+id/txv_tax_amount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="textEnd"
-            android:text="@string/tax_amount_default" />
+            android:text="@string/tax_amount" />
 
     </LinearLayout>
 

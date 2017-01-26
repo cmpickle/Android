@@ -20,6 +20,6 @@
         android:layout_weight="1"
         android:textSize="24sp"
         android:textAlignment="textEnd"
-        android:text="@string/default_value" />
+        android:text="@string/total_value" />
 
 </LinearLayout>
