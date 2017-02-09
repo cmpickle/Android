@@ -23,12 +23,13 @@ public class PlayAgainDialogFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-
+/*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_play_again_dialog, container, false);
     }
+    */
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
