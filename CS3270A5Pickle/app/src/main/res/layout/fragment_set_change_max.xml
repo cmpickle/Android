@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cmpickle.cs3270a5.SetChangeMaxFragment">
+
+    <TextView
+        android:id="@+id/tv_set_change_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp"
+        android:text="@string/set_change_max"/>
+
+    <TextView
+        android:id="@+id/tv_maximum_change_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:layout_below="@id/tv_set_change_max"
+        android:text="@string/maximum_change_amount"/>
+
+    <EditText
+        android:id="@+id/et_maximum_change_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/onehundred"
+        android:layout_alignBaseline="@+id/tv_maximum_change_value"
+        android:layout_alignBottom="@+id/tv_maximum_change_value"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_maximum_change_value"
+        android:layout_alignParentEnd="true"
+        android:text="@string/save"/>
+
+</RelativeLayout>

@@ -1,0 +1,62 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="30dp"
+    tools:context="com.cmpickle.cs3270a5.ChangeButtonsFragment">
+
+    <TableRow>
+        <Button
+            android:id="@+id/btn_50_dollars"
+            android:text="@string/fifty_dollars"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_20_dollars"
+            android:text="@string/twenty_dollars"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_10_dollars"
+            android:text="@string/ten_dollars"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_5_dollars"
+            android:text="@string/five_dollars"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_1_dollar"
+            android:text="@string/one_dollar"
+            android:layout_weight="1"/>
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:id="@+id/btn_50_cents"
+            android:text="@string/fifty_cents"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_25_cents"
+            android:text="@string/twentyfive_cents"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_10_cents"
+            android:text="@string/ten_cents"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_5_cents"
+            android:text="@string/five_cents"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_1_cent"
+            android:text="@string/one_cent"
+            android:layout_weight="1"/>
+    </TableRow>
+
+</TableLayout>

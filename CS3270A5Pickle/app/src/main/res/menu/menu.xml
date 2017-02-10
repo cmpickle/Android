@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/zero_correct_count"
+        android:orderInCategory="100"
+        android:title="@string/zero_correct_count"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/set_change_max"
+        android:orderInCategory="200"
+        android:title="@string/set_change_max"
+        android:showAsAction="never" />
+</menu>
