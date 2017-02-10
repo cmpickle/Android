@@ -24,11 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/onehundred"
+        android:inputType="numberDecimal"
         android:layout_alignBaseline="@+id/tv_maximum_change_value"
         android:layout_alignBottom="@+id/tv_maximum_change_value"
         android:layout_alignParentEnd="true" />
 
     <Button
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_maximum_change_value"

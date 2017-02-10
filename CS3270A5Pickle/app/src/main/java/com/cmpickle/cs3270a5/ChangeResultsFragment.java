@@ -55,4 +55,8 @@ public class ChangeResultsFragment extends Fragment {
 
         tvChangeTotalSoFarValue.setText(String.format(getResources().getString(R.string.change_total_so_far_value), changeTotalSoFarValue));
     }
+
+    public void updateMaximumChangeAmount(double max) {
+        changeMax = max;
+    }
 }
