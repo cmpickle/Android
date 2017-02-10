@@ -19,6 +19,7 @@
     <string name="change_total_so_far">Change total so far</string>
     <string name="change_total_so_far_value">$%.2f</string>
     <string name="zero_cents">$.00</string>
+    <string name="str_money">$%2.2d</string>
     <string name="time_remaining">Time Remaining</string>
     <string name="thirty">30</string>
     <string name="set_change_max">Set Change Max</string>
