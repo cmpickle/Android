@@ -88,15 +88,15 @@ public class ChangeResultsFragment extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-        Log.d("test", "ChangeRusultsFragment - onResume() - Setting etChangetoMakeValue to: " + numberFormat.format(Double.longBitsToDouble(sharedPreferences.getLong("changeToMakeValue", 100))));
+        Log.d("test", "ChangeResultsFragment - onResume() - Setting etChangeToMakeValue to: " + numberFormat.format(Double.longBitsToDouble(sharedPreferences.getLong("changeToMakeValue", 100))));
         etChangeToMakeValue.setText(numberFormat.format(Double.longBitsToDouble(sharedPreferences.getLong("changeToMakeValue", 100))));
         changeToMakeValue = Double.longBitsToDouble(sharedPreferences.getLong("changeToMakeValue", 100));
-        Log.d("test", "ChangeRusultsFragment - onResume() - Setting tvChangeTotalSoFarValue to: " + numberFormat.format(Double.longBitsToDouble(sharedPreferences.getLong("changeTotalSoFar", 0))));
+        Log.d("test", "ChangeResultsFragment - onResume() - Setting tvChangeTotalSoFarValue to: " + numberFormat.format(Double.longBitsToDouble(sharedPreferences.getLong("changeTotalSoFar", 0))));
         tvChangeTotalSoFarValue.setText(numberFormat.format(Double.longBitsToDouble(sharedPreferences.getLong("changeTotalSoFarValue", 0))));
         changeTotalSoFarValue = Double.longBitsToDouble(sharedPreferences.getLong("changeTotalSoFarValue", 0));
-        Log.d("test", "ChangeRusultsFragment - onResume() - Setting changeMax to: " + Double.longBitsToDouble(sharedPreferences.getLong("maximumChangeAmount", 100)));
+        Log.d("test", "ChangeResultsFragment - onResume() - Setting changeMax to: " + Double.longBitsToDouble(sharedPreferences.getLong("maximumChangeAmount", 100)));
         changeMax = Double.longBitsToDouble(sharedPreferences.getLong("maximumChangeAmount", 100));
-        Log.d("test", "ChangeRusultsFragment - onResume() - Setting tvTimeRemaining to: " + String.valueOf(sharedPreferences.getInt("timeRemaining", 15)));
+        Log.d("test", "ChangeResultsFragment - onResume() - Setting tvTimeRemaining to: " + String.valueOf(sharedPreferences.getInt("timeRemaining", 15)));
         tvTimeRemainingValue.setText(String.valueOf(sharedPreferences.getInt("timeRemaining", 15)));
         timeRemaining = sharedPreferences.getInt("timeRemaining", 15);
 
