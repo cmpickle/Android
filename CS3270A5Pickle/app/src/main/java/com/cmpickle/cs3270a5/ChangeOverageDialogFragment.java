@@ -31,4 +31,10 @@ public class ChangeOverageDialogFragment extends DialogFragment {
                     }
                 }).create();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dismiss();
+    }
 }

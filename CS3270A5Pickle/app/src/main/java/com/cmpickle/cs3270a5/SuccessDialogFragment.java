@@ -32,4 +32,10 @@ public class SuccessDialogFragment extends DialogFragment {
                 }).create();
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dismiss();
+    }
 }

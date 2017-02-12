@@ -35,4 +35,9 @@ public class TimeOutDialogFragment extends DialogFragment {
                 }).create();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        dismiss();
+    }
 }
