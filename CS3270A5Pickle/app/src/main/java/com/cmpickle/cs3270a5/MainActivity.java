@@ -11,6 +11,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends Activity {
 
+    private int state = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,28 @@ public class MainActivity extends Activity {
         fragmentTransaction.replace(R.id.changeButtonsContainer, new ChangeButtonsFragment(), "changeButtonsFragment");
         fragmentTransaction.replace(R.id.changeActionsContainer, new ChangeActionsFragment(), "changeActionsFragment");
         fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("state", state);
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        int currentState = sharedPreferences.getInt("state", 0);
+        if(currentState == 0) {
+            setMainView();
+        }
+        if(currentState == 1) {
+            setChangeMaxFragmentView();
+        }
     }
 
     @Override
@@ -39,20 +63,25 @@ public class MainActivity extends Activity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("correctChangeCount", 0);
             editor.apply();
+
+            if(state == 0) {
+                ChangeActionsFragment changeActionsFragment = (ChangeActionsFragment) getFragmentManager().findFragmentByTag("changeActionsFragment");
+                changeActionsFragment.zeroCorrectChangeCount();
+            }
             return true;
         }
         if(id == R.id.set_change_max) {
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.changeResultsContainer, new SetChangeMaxFragment(), "setChangeMaxFragment");
-            fragmentTransaction.remove(fragmentManager.findFragmentByTag("changeButtonsFragment"));
-            fragmentTransaction.remove(fragmentManager.findFragmentByTag("changeActionsFragment"));
-            fragmentTransaction.addToBackStack("setChangeMaxView");
-            fragmentTransaction.commit();
+            if(state != 1)
+                setChangeMaxFragmentView();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     public void updateChangeTotalSoFar(double amount) {
@@ -60,12 +89,25 @@ public class MainActivity extends Activity {
         changeResultsFragment.updateChangeTotalSoFar(amount);
     }
 
-    public void restoreMainView() {
+    public void setMainView() {
+        state = 0;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.changeResultsContainer, new ChangeResultsFragment(), "changeResultsFragment");
         fragmentTransaction.replace(R.id.changeButtonsContainer, new ChangeButtonsFragment(), "changeButtonsFragment");
         fragmentTransaction.replace(R.id.changeActionsContainer, new ChangeActionsFragment(), "changeActionsFragment");
+        fragmentTransaction.addToBackStack("setMainView");
+        fragmentTransaction.commit();
+    }
+
+    private void setChangeMaxFragmentView() {
+        state = 1;
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.changeResultsContainer, new SetChangeMaxFragment(), "setChangeMaxFragment");
+        fragmentTransaction.remove(fragmentManager.findFragmentByTag("changeButtonsFragment"));
+        fragmentTransaction.remove(fragmentManager.findFragmentByTag("changeActionsFragment"));
+        fragmentTransaction.addToBackStack("setChangeMaxView");
         fragmentTransaction.commit();
     }
 
@@ -79,5 +121,20 @@ public class MainActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         ChangeResultsFragment changeResultsFragment = (ChangeResultsFragment) fragmentManager.findFragmentByTag("changeResultsFragment");
         changeResultsFragment.newAmount();
+    }
+
+    public void incrementCorrectCount() {
+        FragmentManager fragmentManager = getFragmentManager();
+        ChangeActionsFragment changeActionsFragment = (ChangeActionsFragment) fragmentManager.findFragmentByTag("changeActionsFragment");
+        changeActionsFragment.incrementCorrectCount();
+    }
+
+    public void startTimer() {
+        ChangeResultsFragment changeResultsFragment = (ChangeResultsFragment) getFragmentManager().findFragmentByTag("changeResultsFragment");
+        changeResultsFragment.startTimer();
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:layout_below="@id/tv_set_change_max"
-        android:text="@string/maximum_change_amount"/>
+        android:text="@string/maximum_change_amount"
+        tools:ignore="RtlSymmetry" />
 
     <EditText
         android:id="@+id/et_maximum_change_value"
@@ -27,7 +28,8 @@
         android:inputType="numberDecimal"
         android:layout_alignBaseline="@+id/tv_maximum_change_value"
         android:layout_alignBottom="@+id/tv_maximum_change_value"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/btn_save"

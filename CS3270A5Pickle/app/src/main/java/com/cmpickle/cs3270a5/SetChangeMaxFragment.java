@@ -1,6 +1,7 @@
 package com.cmpickle.cs3270a5;
 
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,9 +18,10 @@ import android.widget.EditText;
  */
 public class SetChangeMaxFragment extends Fragment implements View.OnClickListener {
 
-    EditText etMaximumChangeAmountValue;
+    private EditText etMaximumChangeAmountValue;
+    private Button save;
 
-    Button save;
+    private Double maximumChangeAmountValue = 100.0;
 
     public SetChangeMaxFragment() {
         // Required empty public constructor
@@ -40,17 +42,52 @@ public class SetChangeMaxFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        maximumChangeAmountValue = Double.valueOf(etMaximumChangeAmountValue.getText().toString());
+        editor.putLong("etMaximumChangeAmountValue", Double.doubleToLongBits(maximumChangeAmountValue));
+        editor.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.setState(1);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        if(fragmentManager.findFragmentById(R.id.changeButtonsContainer) != null)
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.changeButtonsContainer)).commit();
+        if(fragmentManager.findFragmentById(R.id.changeActionsContainer) != null)
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.changeActionsContainer)).commit();
+
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        maximumChangeAmountValue = Double.longBitsToDouble(sharedPreferences.getLong("etMaximumChangeAmountValue", 100));
+        etMaximumChangeAmountValue.setText(String.valueOf(maximumChangeAmountValue));
+    }
+
+    @Override
     public void onClick(View v) {
         if(v == save) {
+            maximumChangeAmountValue = Double.valueOf(etMaximumChangeAmountValue.getText().toString());
+            if(maximumChangeAmountValue<50.01) {
+                InvalidMaxValueDialogFragment invalidMaxValueDialogFragment = new InvalidMaxValueDialogFragment();
+                invalidMaxValueDialogFragment.setCancelable(false);
+                invalidMaxValueDialogFragment.show(getFragmentManager(), "invalid input");
+                return;
+            }
             //Save the value in a SharedPreference because the changeResultsFragment is currently destroyed and we want to maintain separations of concerns
             SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong("maximumChangeAmount", Double.doubleToLongBits(100)); //We have to convert the double to a long in order to not lose precision (putting as a long)
+            editor.putLong("maximumChangeAmount", Double.doubleToLongBits(maximumChangeAmountValue)); //We have to convert the double to a long in order to not lose precision (putting as a long)
                                                                                  //and to not cause under/overflows
             editor.apply();
 
             MainActivity mainActivity = (MainActivity) getActivity();
-            mainActivity.restoreMainView();
+            mainActivity.setMainView();
         }
     }
 }

@@ -32,7 +32,8 @@
             android:inputType="none"
             android:textAlignment="textEnd"
             android:textColor="@android:color/black"
-            android:text="" />
+            android:text=""
+            tools:ignore="LabelFor" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
-            android:text="@string/thirty"/>
+            android:text="@string/fifteen"/>
     </LinearLayout>
 
 </LinearLayout>

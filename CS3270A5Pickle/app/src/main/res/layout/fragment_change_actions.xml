@@ -15,14 +15,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/start_over"/>
+            android:text="@string/start_over"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_new_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/new_amount"/>
+            android:text="@string/new_amount"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <LinearLayout

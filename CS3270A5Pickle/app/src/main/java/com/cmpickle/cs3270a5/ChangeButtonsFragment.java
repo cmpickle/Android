@@ -1,8 +1,6 @@
 package com.cmpickle.cs3270a5;
 
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -17,17 +15,6 @@ import android.widget.Button;
  */
 public class ChangeButtonsFragment extends Fragment implements View.OnClickListener {
 
-    Button fiftyDollars;
-    Button twentyDollars;
-    Button tenDollars;
-    Button fiveDollars;
-    Button oneDollar;
-    Button fiftyCents;
-    Button twentyfiveCents;
-    Button tenCents;
-    Button fiveCents;
-    Button oneCent;
-
     public ChangeButtonsFragment() {
         // Required empty public constructor
     }
@@ -38,16 +25,16 @@ public class ChangeButtonsFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_change_buttons, container, false);
 
-        fiftyDollars = (Button) view.findViewById(R.id.btn_50_dollars);
-        twentyDollars = (Button) view.findViewById(R.id.btn_20_dollars);
-        tenDollars = (Button) view.findViewById(R.id.btn_10_dollars);
-        fiveDollars = (Button) view.findViewById(R.id.btn_5_dollars);
-        oneDollar = (Button) view.findViewById(R.id.btn_1_dollar);
-        fiftyCents = (Button) view.findViewById(R.id.btn_50_cents);
-        twentyfiveCents = (Button) view.findViewById(R.id.btn_25_cents);
-        tenCents = (Button) view.findViewById(R.id.btn_10_cents);
-        fiveCents = (Button) view.findViewById(R.id.btn_5_cents);
-        oneCent = (Button) view.findViewById(R.id.btn_1_cent);
+        Button fiftyDollars = (Button) view.findViewById(R.id.btn_50_dollars);
+        Button twentyDollars = (Button) view.findViewById(R.id.btn_20_dollars);
+        Button tenDollars = (Button) view.findViewById(R.id.btn_10_dollars);
+        Button fiveDollars = (Button) view.findViewById(R.id.btn_5_dollars);
+        Button oneDollar = (Button) view.findViewById(R.id.btn_1_dollar);
+        Button fiftyCents = (Button) view.findViewById(R.id.btn_50_cents);
+        Button twentyfiveCents = (Button) view.findViewById(R.id.btn_25_cents);
+        Button tenCents = (Button) view.findViewById(R.id.btn_10_cents);
+        Button fiveCents = (Button) view.findViewById(R.id.btn_5_cents);
+        Button oneCent = (Button) view.findViewById(R.id.btn_1_cent);
 
         fiftyDollars.setOnClickListener(this);
         twentyDollars.setOnClickListener(this);

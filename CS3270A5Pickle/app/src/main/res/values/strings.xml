@@ -18,10 +18,9 @@
     <string name="change_to_make">Change to Make</string>
     <string name="change_total_so_far">Change total so far</string>
     <string name="change_total_so_far_value">$%.2f</string>
-    <string name="zero_cents">$.00</string>
-    <string name="str_money">$%2.2d</string>
+    <string name="zero_cents">$0.00</string>
     <string name="time_remaining">Time Remaining</string>
-    <string name="thirty">30</string>
+    <string name="fifteen">15</string>
     <string name="set_change_max">Set Change Max</string>
     <string name="maximum_change_amount">Maximum Change Amount</string>
     <string name="onehundred">100</string>
@@ -33,4 +32,6 @@
     <string name="you_were_able_to_make_the_correct_change">You were able to make the correct change.</string>
     <string name="you_did_it">You did it!</string>
     <string name="thats_too_much_change">That\'s too much change.</string>
+    <string name="max_value_minimum">The Change Max Value must be $50.01 or greater.</string>
+    <string name="invalid_input">Invalid Input</string>
 </resources>

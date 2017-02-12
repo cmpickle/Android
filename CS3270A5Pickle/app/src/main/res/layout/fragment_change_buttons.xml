@@ -9,54 +9,64 @@
         <Button
             android:id="@+id/btn_50_dollars"
             android:text="@string/fifty_dollars"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_20_dollars"
             android:text="@string/twenty_dollars"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_10_dollars"
             android:text="@string/ten_dollars"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_5_dollars"
             android:text="@string/five_dollars"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_1_dollar"
             android:text="@string/one_dollar"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
     </TableRow>
 
     <TableRow>
         <Button
             android:id="@+id/btn_50_cents"
             android:text="@string/fifty_cents"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_25_cents"
             android:text="@string/twentyfive_cents"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_10_cents"
             android:text="@string/ten_cents"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_5_cents"
             android:text="@string/five_cents"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btn_1_cent"
             android:text="@string/one_cent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            tools:ignore="ButtonStyle" />
     </TableRow>
 
 </TableLayout>

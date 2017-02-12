@@ -17,11 +17,9 @@ import android.widget.TextView;
  */
 public class ChangeActionsFragment extends Fragment implements View.OnClickListener {
 
-    Button btnStartOver;
-    Button btnNewAmount;
-    TextView tvCorrectChangeCountValue;
+    private TextView tvCorrectChangeCountValue;
 
-    int correctChangeCount = 0;
+    private int correctChangeCount = 0;
 
     public ChangeActionsFragment() {
         // Required empty public constructor
@@ -33,12 +31,12 @@ public class ChangeActionsFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_change_actions, container, false);
 
-        btnStartOver = (Button) view.findViewById(R.id.btn_start_over);
-        btnNewAmount = (Button) view.findViewById(R.id.btn_new_amount);
+        Button btnStartOver = (Button) view.findViewById(R.id.btn_start_over);
+        Button btnNewAmount = (Button) view.findViewById(R.id.btn_new_amount);
         tvCorrectChangeCountValue = (TextView) view.findViewById(R.id.tv_correct_change_count_value);
 
         SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-        sharedPreferences.getInt("correctChangeCount", 0);
+        correctChangeCount = sharedPreferences.getInt("correctChangeCount", 0);
 
         tvCorrectChangeCountValue.setText(String.valueOf(correctChangeCount));
 
@@ -46,6 +44,16 @@ public class ChangeActionsFragment extends Fragment implements View.OnClickListe
         btnNewAmount.setOnClickListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("correctChangeCount", correctChangeCount);
+        editor.apply();
     }
 
     @Override
@@ -60,7 +68,20 @@ public class ChangeActionsFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public void updateCorrectChangeCount(int count) {
-        tvCorrectChangeCountValue.setText(String.valueOf(count));
+    public void zeroCorrectChangeCount() {
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        correctChangeCount = sharedPreferences.getInt("correctChangeCount", 0);
+
+        updateCorrectChangeCount();
+    }
+
+    private void updateCorrectChangeCount() {
+        tvCorrectChangeCountValue.setText(String.valueOf(correctChangeCount));
+    }
+
+    public void incrementCorrectCount() {
+        ++correctChangeCount;
+
+        updateCorrectChangeCount();
     }
 }
