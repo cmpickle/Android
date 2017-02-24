@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,7 +21,6 @@ public class CourseListFragment extends Fragment {
     public CourseListFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
