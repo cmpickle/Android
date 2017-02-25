@@ -33,6 +33,8 @@ public class CourseListFragment extends Fragment {
         mainActivity.floatingActionButton.setLayoutParams(lp);
         mainActivity.floatingActionButton.setImageResource(android.R.drawable.ic_input_add);
 
+
+
         return view;
     }
 
