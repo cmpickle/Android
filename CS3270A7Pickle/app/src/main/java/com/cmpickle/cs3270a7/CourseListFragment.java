@@ -48,8 +48,8 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.displayCourseViewFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, new CourseViewFragment(), MainActivity.COURSE_VIEW_FRAGMENT).addToBackStack("courseView").commit();
             }
         });
 
@@ -88,8 +88,10 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
         args.putLong("id", id);
         Log.d(CourseListFragment.class.getName(), "The List Item that was clicked has an ID of " + id);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.displayCourseEditFragment(args);
+        FragmentManager fragmentManager = getFragmentManager();
+        CourseEditFragment courseEditFragment = new CourseEditFragment();
+        courseEditFragment.setArguments(args);
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, courseEditFragment, MainActivity.COURSE_EDIT_FRAGMENT).addToBackStack("courseEdit").commit();
     }
 
     @Override
