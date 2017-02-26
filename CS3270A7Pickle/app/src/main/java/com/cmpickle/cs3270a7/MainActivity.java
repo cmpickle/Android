@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.cmpickle.cs3270a7.courseDatabase.CourseListTable;
 import com.facebook.stetho.Stetho;
 
 import butterknife.BindView;

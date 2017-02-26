@@ -2,7 +2,6 @@ package com.cmpickle.cs3270a7;
 
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cmpickle.cs3270a7.courseDatabase.DatabaseHelper;
 
@@ -27,6 +27,9 @@ public class CourseViewFragment extends Fragment {
 
     @BindView(R.id.et_id)
     EditText etId;
+
+    @BindView(R.id.tv_name)
+    TextView tvName;
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -68,6 +71,10 @@ public class CourseViewFragment extends Fragment {
         saveFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(etName.getText().toString().isEmpty()) {
+                    tvName.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                    return;
+                }
                 saveCourse();
 
                 MainActivity mainActivity = (MainActivity) getActivity();
