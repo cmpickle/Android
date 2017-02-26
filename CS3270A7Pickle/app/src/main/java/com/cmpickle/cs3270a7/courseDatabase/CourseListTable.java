@@ -10,22 +10,22 @@ import android.util.Log;
 
 public class CourseListTable {
 
-    public static final String TABLE_COURSE_LIST = "courseList";
+    public static final String TABLE_COURSE_LIST = "course_list";
     public static final String COLUMN_ID_KEY = "_id";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_COURSE_CODE = "courseCode";
-    public static final String COLUMN_START_AT = "startAt";
-    public static final String COLUMN_END_AT = "endAt";
+    public static final String COLUMN_COURSE_CODE = "course_code";
+    public static final String COLUMN_START_AT = "start_at";
+    public static final String COLUMN_END_AT = "end_at";
 
     private static final String DATABASE_CREATE = "create table "
             + TABLE_COURSE_LIST + "("
             + COLUMN_ID_KEY + " integer primary key autoincrement, "
-            + COLUMN_ID + " text not null, "
+            + COLUMN_ID + ", "
             + COLUMN_NAME + " text not null, "
-            + COLUMN_COURSE_CODE + " text not null, "
-            + COLUMN_START_AT + " text not null, "
-            + COLUMN_END_AT + " text not null);";
+            + COLUMN_COURSE_CODE + ", "
+            + COLUMN_START_AT + ", "
+            + COLUMN_END_AT + ");";
 
     public static void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);

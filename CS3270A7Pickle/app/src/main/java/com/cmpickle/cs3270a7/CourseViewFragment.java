@@ -1,13 +1,23 @@
 package com.cmpickle.cs3270a7;
 
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.design.widget.CoordinatorLayout;
-import android.view.Gravity;
+import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+
+import com.cmpickle.cs3270a7.courseDatabase.DatabaseHelper;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import icepick.Icepick;
 
 
 /**
@@ -15,24 +25,72 @@ import android.view.ViewGroup;
  */
 public class CourseViewFragment extends Fragment {
 
+    @BindView(R.id.et_id)
+    EditText etId;
+
+    @BindView(R.id.et_name)
+    EditText etName;
+
+    @BindView(R.id.et_course_code)
+    EditText etCourseCode;
+
+    @BindView(R.id.et_start_at)
+    EditText etStartAt;
+
+    @BindView(R.id.et_end_at)
+    EditText etEndAt;
+
+    @BindView(R.id.save_fab)
+    FloatingActionButton saveFab;
 
     public CourseViewFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_view, container, false);
+        ButterKnife.bind(this, view);
+
+        saveFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveCourse();
+
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.displayCourseListFragment();
+            }
+        });
+
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mainActivity.floatingActionButton.getLayoutParams();
-        lp.gravity = Gravity.BOTTOM | Gravity.END;
-        mainActivity.floatingActionButton.setLayoutParams(lp);
-        mainActivity.floatingActionButton.setImageResource(android.R.drawable.ic_menu_save);
+        Log.d(CourseViewFragment.class.getName(), "Setting fragment state CourseViewFragment");
+        mainActivity.state = MainActivity.COURSE_VIEW_INT;
 
         return view;
     }
 
+    public void saveCourse() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+        databaseHelper.insertCourse(etId.getText().toString(),
+                etName.getText().toString(),
+                etCourseCode.getText().toString(),
+                etStartAt.getText().toString(),
+                etEndAt.getText().toString());
+    }
 }

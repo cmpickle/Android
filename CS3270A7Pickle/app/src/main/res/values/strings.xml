@@ -9,4 +9,8 @@
     <string name="start_at">Start At:</string>
     <string name="end_at">End At:</string>
     <string name="name">Name:</string>
+    <string name="delete">DELETE</string>
+    <string name="cancel">CANCEL</string>
+    <string name="are_you_sure">Are You Sure?</string>
+    <string name="permanently_delete">This will permanently delete the course.</string>
 </resources>

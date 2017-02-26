@@ -1,74 +1,91 @@
 package com.cmpickle.cs3270a7;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+
+import com.cmpickle.cs3270a7.courseDatabase.CourseListTable;
+import com.facebook.stetho.Stetho;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import icepick.Icepick;
+import icepick.State;
 
 public class MainActivity extends AppCompatActivity {
 
-    FloatingActionButton floatingActionButton;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    FragmentManager fragmentManager = getFragmentManager();
 
     public static final String COURSE_LIST_FRAGMENT = "courseListFragment";
     public static final String COURSE_VIEW_FRAGMENT = "courseViewFragment";
     public static final String COURSE_EDIT_FRAGMENT = "courseEditFragment";
+
+    public static final int NO_FRAGMENT = -1;
+    public static final int COURSE_LIST_INT = 0;
+    public static final int COURSE_VIEW_INT = 1;
+    public static final int COURSE_EDIT_INT = 2;
+    @State
+    public int state = NO_FRAGMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+        Stetho.initializeWithDefaults(this);
+        Icepick.restoreInstanceState(this, savedInstanceState);
         setSupportActionBar(toolbar);
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, new CourseListFragment(), COURSE_LIST_FRAGMENT).commit();
+        if(state == NO_FRAGMENT || state == COURSE_LIST_INT) {
+            displayCourseListFragment();
+        } else if(state == COURSE_VIEW_INT) {
+            displayCourseViewFragment();
+        } else if(state == COURSE_EDIT_INT) {
+            displayCourseEditFragment();
+        }
     }
 
     @Override
-    public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() > 0) {
-            CourseListFragment courseListFragment = (CourseListFragment) getFragmentManager().findFragmentByTag(COURSE_LIST_FRAGMENT);
-            if(courseListFragment != null && courseListFragment.isVisible()) {
-//                floatingActionButton.setLayoutParams();
-            } else {
-                floatingActionButton.show();
-            }
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 
-    private void setFABIcon(final int resId) {
-        floatingActionButton.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-            @Override
-            public void onHidden(FloatingActionButton fab) {
-                fab.setImageResource(resId);
-                fab.show();
-            }
-        });
+    public void displayCourseListFragment() {
+        CourseListFragment courseListFragment = (CourseListFragment) fragmentManager.findFragmentByTag(COURSE_LIST_FRAGMENT);
+        if (courseListFragment == null)
+            courseListFragment = new CourseListFragment();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, courseListFragment, COURSE_LIST_FRAGMENT).commit();
     }
 
-    public void onFABClick(View view) {
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
-        String tag = currentFragment.getTag();
-
-        switch (tag) {
-            case COURSE_LIST_FRAGMENT:
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, new CourseViewFragment(), COURSE_VIEW_FRAGMENT).addToBackStack(COURSE_VIEW_FRAGMENT).commit();
-                break;
-            case COURSE_VIEW_FRAGMENT:
-                break;
-            case COURSE_EDIT_FRAGMENT:
-                break;
+    public void displayCourseViewFragment() {
+        CourseViewFragment courseViewFragment = (CourseViewFragment) fragmentManager.findFragmentByTag(COURSE_VIEW_FRAGMENT);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if(courseViewFragment == null) {
+            courseViewFragment = new CourseViewFragment();
+            fragmentTransaction.addToBackStack("courseView");
         }
+        fragmentTransaction.replace(R.id.fragment_container, courseViewFragment, COURSE_VIEW_FRAGMENT).commit();
+    }
+
+    public void displayCourseEditFragment() {
+        displayCourseEditFragment(null);
+    }
+
+    public void displayCourseEditFragment(Bundle args) {
+        CourseEditFragment courseEditFragment = (CourseEditFragment) fragmentManager.findFragmentByTag(COURSE_EDIT_FRAGMENT);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (courseEditFragment == null) {
+            courseEditFragment = new CourseEditFragment();
+            courseEditFragment.setArguments(args);
+            fragmentTransaction.addToBackStack("courseEdit");
+        }
+        fragmentTransaction.replace(R.id.fragment_container, courseEditFragment, COURSE_EDIT_FRAGMENT).commit();
     }
 }
