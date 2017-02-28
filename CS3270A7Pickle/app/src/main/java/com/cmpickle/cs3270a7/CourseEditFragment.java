@@ -4,6 +4,7 @@ package com.cmpickle.cs3270a7;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -86,18 +87,7 @@ public class CourseEditFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        databaseHelper = new DatabaseHelper(getActivity());
-        Cursor cursor = databaseHelper.getCourseById(id);
-
-        cursor.moveToFirst();
-
-        if(cursor.getCount()>0) {
-            etId.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_ID)));
-            etName.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_NAME)));
-            etCourseCode.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_COURSE_CODE)));
-            etStartAt.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_START_AT)));
-            etEndAt.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_END_AT)));
-        }
+        new GetCourseById().execute("");
 
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -136,5 +126,29 @@ public class CourseEditFragment extends Fragment {
         databaseHelper.deleteCourse(id);
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.displayCourseListFragment();
+    }
+
+    public class GetCourseById extends AsyncTask<String, Integer, Cursor> {
+        @Override
+        protected Cursor doInBackground(String... params) {
+            databaseHelper = new DatabaseHelper(getActivity());
+            Cursor cursor = databaseHelper.getCourseById(id);
+
+            cursor.moveToFirst();
+            return cursor;
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+
+            if(cursor.getCount()>0) {
+                etId.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_ID)));
+                etName.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_NAME)));
+                etCourseCode.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_COURSE_CODE)));
+                etStartAt.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_START_AT)));
+                etEndAt.setText(cursor.getString(cursor.getColumnIndex(CourseListTable.COLUMN_END_AT)));
+            }
+        }
     }
 }

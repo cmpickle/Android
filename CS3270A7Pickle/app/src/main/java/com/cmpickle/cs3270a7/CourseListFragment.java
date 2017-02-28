@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
@@ -45,6 +46,8 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         ButterKnife.bind(this, view);
 
+        new GetAllCourses().execute("");
+
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,13 +55,6 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, new CourseViewFragment(), MainActivity.COURSE_VIEW_FRAGMENT).addToBackStack("courseView").commit();
             }
         });
-
-        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
-        Cursor cursor = databaseHelper.getAllCourses();
-        String[] columns = new String[] {CourseListTable.COLUMN_NAME};
-        int[] views = new int[] {android.R.id.text1};
-        adapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1, cursor, columns, views, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        setListAdapter(adapter);
 
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -99,5 +95,25 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
         MainActivity mainActivity = (MainActivity) getActivity();
         Log.d(CourseListFragment.class.getName(), "Setting fragment state CourseListFragment");
         mainActivity.state = MainActivity.COURSE_LIST_INT;
+    }
+
+    public class GetAllCourses extends AsyncTask<String, Integer, Cursor> {
+
+        @Override
+        protected Cursor doInBackground(String... params) {
+            DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+            Cursor cursor = databaseHelper.getAllCourses();
+            return cursor;
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+
+            String[] columns = new String[] {CourseListTable.COLUMN_NAME};
+            int[] views = new int[] {android.R.id.text1};
+            adapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1, cursor, columns, views, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+            setListAdapter(adapter);
+        }
     }
 }
