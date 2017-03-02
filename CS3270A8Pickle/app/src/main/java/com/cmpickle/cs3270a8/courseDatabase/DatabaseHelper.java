@@ -92,6 +92,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void clearCourseTable() {
+        if (open() != null) {
+            database.execSQL(String.format("DROP TABLE IF EXISTS %s", CourseListTable.TABLE_COURSE_LIST));
+            CourseListTable.onCreate(database);
+        }
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         CourseListTable.onCreate(db);

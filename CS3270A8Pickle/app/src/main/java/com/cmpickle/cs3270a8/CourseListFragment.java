@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -24,6 +25,7 @@ import android.widget.ListView;
 
 import com.cmpickle.cs3270a8.courseDatabase.DatabaseHelper;
 import com.cmpickle.cs3270a8.courseDatabase.CourseListTable;
+import com.cmpickle.cs3270a8.CanvasObjects.Course;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,6 +40,9 @@ import javax.net.ssl.HttpsURLConnection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import icepick.Icepick;
+import icepick.State;
+
+import static com.cmpickle.cs3270a8.Authorization.AUTH_TOKEN;
 
 
 /**
@@ -49,6 +54,9 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
     FloatingActionButton addFab;
 
     SimpleCursorAdapter adapter;
+
+    @State
+    CanvasObjects.Course[] courses;
 
     public CourseListFragment() {
         // Required empty public constructor
@@ -85,15 +93,71 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
         super.onStart();
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long _id) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+                Cursor courseCursor = databaseHelper.getCourseById(_id);
+                String id = courseCursor.getString(courseCursor.getColumnIndex("id"));
+                Course course = null;
+
+                for(Course c : courses) {
+                    if(c.id.equals(id)) {
+                        course = c;
+                        break;
+                    }
+                }
+                if(course == null)
+                    return false;
+
+                Log.d(CourseListFragment.class.getName(), "Searching for class assignments");
+                String rawJson = "";
+                try {
+                    URL url = new URL("https://weber.instructure.com/api/v1/courses/:"+course.id+"/assignments");
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setRequestProperty("Authorization", "Bearer " + AUTH_TOKEN);
+                    conn.connect();
+                    int status = conn.getResponseCode();
+                    switch (status) {
+                        case 200:
+                        case 201:
+                            BufferedReader br =
+                                    new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                            rawJson = br.readLine();
+                            Log.d(CourseListFragment.class.getName(), "raw Json String Length = " + rawJson.length());
+                            Log.d(CourseListFragment.class.getName(), "raw Json first 256 chars: " + rawJson.substring(0, 256));
+                            Log.d(CourseListFragment.class.getName(), "raw Json last 256 chars: " + rawJson.substring(rawJson.length() - 256, rawJson.length()));
+                    }
+                } catch (MalformedURLException e) {
+                    Log.d(CourseListFragment.class.getName(), e.getMessage());
+                } catch (IOException e) {
+                    Log.d(CourseListFragment.class.getName(), e.getMessage());
+                } catch (Exception e) {
+                    Log.d(CourseListFragment.class.getName(), e.getMessage());
+                }
+
+                CanvasObjects.Assignments[] assignments;
+
                 Bundle args = new Bundle();
-                args.putLong("id", id);
+                args.putString("id", course.id);
                 Log.d(CourseListFragment.class.getName(), "The List Item that was long clicked has an ID of " + id);
+
+                try {
+                    assignments = jsonParse(rawJson);
+                    for (int i = 0; i < assignments.length; ++i) {
+                        Log.d(CourseListFragment.class.getName(), "adding course to list: " + assignments[i].title);
+                        if (assignments[i].title != null) {
+                            args.putString("a"+i+1, assignments[i].title);
+                        }
+                    }
+                    args.putInt("length", assignments.length);
+                } catch (Exception e) {
+                    Log.d(CourseListFragment.class.getName(), e.getMessage());
+                }
 
                 FragmentManager fragmentManager = getFragmentManager();
                 CourseAssignmentFragment courseAssignmentFragment = new CourseAssignmentFragment();
                 courseAssignmentFragment.setArguments(args);
-                fragmentManager.beginTransaction().replace(com.cmpickle.cs3270a8.R.id.fragment_container, courseAssignmentFragment, MainActivity.COURSE_EDIT_FRAGMENT).addToBackStack("courseEdit").commit();
+                fragmentManager.beginTransaction().replace(com.cmpickle.cs3270a8.R.id.fragment_container, courseAssignmentFragment, MainActivity.COURSE_ASSIGNMENT_FRAGMENT).addToBackStack("courseAssignment").commit();
                 return true;
             }
         });
@@ -147,6 +211,23 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private CanvasObjects.Assignments[] jsonParse(String rawJson) {
+        GsonBuilder gsonb = new GsonBuilder();
+        Gson gson = gsonb.create();
+
+        CanvasObjects.Assignments[] assignmentes = null;
+
+        try {
+            assignmentes = gson.fromJson(rawJson, CanvasObjects.Assignments[].class);
+            Log.d(CourseListFragment.class.getName(), "Number of courses returned is: " + assignmentes.length);
+            Log.d(CourseListFragment.class.getName(), "First Course returned is: " + assignmentes[0].title);
+        } catch (Exception e) {
+            Log.d(CourseListFragment.class.getName(), e.getMessage());
+        }
+
+        return assignmentes;
     }
 
     public class GetAllCourses extends AsyncTask<String, Integer, Cursor> {
@@ -208,9 +289,11 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+            Log.d(CourseListFragment.class.getName(), "Clearing course database for sync process");
+            databaseHelper.clearCourseTable();
 
             try {
-                CanvasObjects.Course[] courses = jsonParse(result);
+                courses = jsonParse(result);
                 for (CanvasObjects.Course course : courses) {
                     Log.d(CourseListFragment.class.getName(), "adding course to list: " + course.name);
                     if (course.name != null) {

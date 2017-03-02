@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String COURSE_LIST_FRAGMENT = "courseListFragment";
     public static final String COURSE_VIEW_FRAGMENT = "courseViewFragment";
     public static final String COURSE_EDIT_FRAGMENT = "courseEditFragment";
+    public static final String COURSE_ASSIGNMENT_FRAGMENT = "courseAssignmentFragment";
 
     public static final int NO_FRAGMENT = -1;
     public static final int COURSE_LIST_INT = 0;

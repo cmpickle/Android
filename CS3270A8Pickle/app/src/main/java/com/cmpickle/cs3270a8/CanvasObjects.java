@@ -44,4 +44,9 @@ public class CanvasObjects {
         protected String computed_current_score;
         protected String computed_final_grade;
     }
+
+    protected class Assignments {
+
+        protected String title;
+    }
 }
