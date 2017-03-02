@@ -34,12 +34,11 @@ import com.cmpickle.restpractice.CanvasObjects.Course;
  */
 public class PlaceholderFragment extends Fragment {
 
-//    @Nullable
-//    @BindView(R.id.fab)
-//    protected FloatingActionButton btnListCourses;
+    @BindView(R.id.fab)
+    protected FloatingActionButton btnListCourses;
 
-    @BindView(R.id.button)
-    protected Button btnListCourses;
+//    @BindView(R.id.button)
+//    protected Button btnListCourses;
 
     @BindView(R.id.list)
     protected ListView lsvCourses;
