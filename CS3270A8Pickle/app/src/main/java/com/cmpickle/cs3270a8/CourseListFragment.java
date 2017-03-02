@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.cmpickle.cs3270a8.courseDatabase.DatabaseHelper;
@@ -77,6 +78,25 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
         mainActivity.state = MainActivity.COURSE_LIST_INT;
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle args = new Bundle();
+                args.putLong("id", id);
+                Log.d(CourseListFragment.class.getName(), "The List Item that was long clicked has an ID of " + id);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                CourseAssignmentFragment courseAssignmentFragment = new CourseAssignmentFragment();
+                courseAssignmentFragment.setArguments(args);
+                fragmentManager.beginTransaction().replace(com.cmpickle.cs3270a8.R.id.fragment_container, courseAssignmentFragment, MainActivity.COURSE_EDIT_FRAGMENT).addToBackStack("courseEdit").commit();
+                return true;
+            }
+        });
     }
 
     @Override
