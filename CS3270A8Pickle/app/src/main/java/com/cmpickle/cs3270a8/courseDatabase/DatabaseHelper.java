@@ -65,8 +65,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 CourseListTable.COLUMN_START_AT,
                 CourseListTable.COLUMN_END_AT,
                 CourseListTable.COLUMN_ID_KEY);
-        database.execSQL(query,
-                new String[] { id, name, courseCode, startAt, endAt, String.valueOf(_id)});
+        if(open() != null)
+            database.execSQL(query,
+                    new String[] { id, name, courseCode, startAt, endAt, String.valueOf(_id)});
     }
 
     public Cursor getAllCourses() {

@@ -8,45 +8,56 @@ package com.cmpickle.cs3270a8;
 
 public class CanvasObjects {
 
-    protected class Course {
-        protected String id;
-        protected String sis_course_id;
-        protected String name;
-        protected String course_code;
-        protected String account_id;
-        protected String start_at;
-        protected String end_at;
-        protected Enrollment[] enrollemnts;
-        protected Calendar calendar;
-        protected String syllabus_body;
-        protected String needs_grading_count;
-        protected Term term;
+    public static class Course {
+
+        public Course(String id, String name, String course_code, String start_at, String end_at) {
+            this.id = id;
+            this.name = name;
+            this.course_code = course_code;
+            this.start_at = start_at;
+            this.end_at = end_at;
+        }
+
+        public String id;
+        public String sis_course_id;
+        public String name;
+        public String course_code;
+        public String account_id;
+        public String start_at;
+        public String end_at;
+        public Enrollment[] enrollments;
+        public Calendar calendar;
+        public String syllabus_body;
+        public String needs_grading_count;
+        public Term term;
     }
 
-    protected class Term {
+    public class Term {
 
-        protected String id;
-        protected String name;
-        protected String start_at;
-        protected String end_at;
+        public String id;
+        public String name;
+        public String start_at;
+        public String end_at;
     }
 
-    protected class Calendar {
+    public class Calendar {
 
-        protected String ics;
+        public String ics;
     }
 
-    protected class Enrollment {
+    public class Enrollment {
 
-        protected String type;
-        protected String role;
-        protected String computed_final_score;
-        protected String computed_current_score;
-        protected String computed_final_grade;
+        public String type;
+        public String role;
+        public String computed_final_score;
+        public String computed_current_score;
+        public String computed_final_grade;
     }
 
-    protected class Assignments {
+    public class Assignments {
 
-        protected String title;
+        public String name;
     }
+
+
 }

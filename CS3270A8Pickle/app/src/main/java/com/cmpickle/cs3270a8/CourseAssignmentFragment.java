@@ -3,6 +3,7 @@ package com.cmpickle.cs3270a8;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
+import java.util.MissingFormatArgumentException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +46,10 @@ public class CourseAssignmentFragment extends Fragment {
         }
         ArrayAdapter<String> assignmentsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, assignments);
         listView.setAdapter(assignmentsAdapter);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Log.d(CourseListFragment.class.getName(), "Setting fragment state CourseAssignmentFragment");
+        mainActivity.state = MainActivity.COURSE_ASSIGNMENT_INT;
 
         return view;
     }

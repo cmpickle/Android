@@ -13,4 +13,5 @@
     <string name="cancel">CANCEL</string>
     <string name="are_you_sure">Are You Sure?</string>
     <string name="permanently_delete">This will permanently delete the course.</string>
+    <string name="edit">Edit</string>
 </resources>

@@ -34,8 +34,8 @@ public class DeleteConfirmationDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FragmentManager fragmentManager = getFragmentManager();
-                        CourseEditFragment courseEditFragment = (CourseEditFragment) fragmentManager.findFragmentByTag(MainActivity.COURSE_EDIT_FRAGMENT);
-                        courseEditFragment.deleteCourse();
+                        CourseViewFragment courseViewFragment = (CourseViewFragment) fragmentManager.findFragmentByTag(MainActivity.COURSE_VIEW_FRAGMENT);
+                        courseViewFragment.deleteCourse();
                     }
                 })
                 .create();
