@@ -8,12 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
-import java.util.MissingFormatArgumentException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +41,7 @@ public class CourseAssignmentFragment extends Fragment {
         for(int i = 0; i < length; ++i) {
             assignments.add(bundle.getString("a"+i+1));
         }
-        ArrayAdapter<String> assignmentsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, assignments);
+        ArrayAdapter<String> assignmentsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, assignments);
         listView.setAdapter(assignmentsAdapter);
 
         MainActivity mainActivity = (MainActivity) getActivity();

@@ -228,11 +228,11 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
                         Log.d(CourseListFragment.class.getName(), "raw Json last 256 chars: " + rawJson.substring(rawJson.length() - 256, rawJson.length()));
                 }
             } catch (MalformedURLException e) {
-                Log.d(CourseListFragment.class.getName(), e.getMessage());
+                Log.d(CourseListFragment.class.getName(), "Malformed URL " + e.getMessage());
             } catch (IOException e) {
-                Log.d(CourseListFragment.class.getName(), e.getMessage());
+                Log.d(CourseListFragment.class.getName(), "IO Exception " + e.getMessage());
             } catch (Exception e) {
-                Log.d(CourseListFragment.class.getName(), e.getMessage());
+                Log.d(CourseListFragment.class.getName(), "" + e.getMessage());
             }
             return rawJson;
         }
@@ -302,9 +302,9 @@ public class CourseListFragment extends ListFragment implements FragmentManager.
                         Log.d(CourseListFragment.class.getName(), "raw Json last 256 chars: " + rawJson.substring(rawJson.length() - 256, rawJson.length()));
                 }
             } catch (MalformedURLException e) {
-                Log.d(CourseListFragment.class.getName(), e.getMessage());
+                Log.d(CourseListFragment.class.getName(), "Malformed URL " + e.getMessage());
             } catch (IOException e) {
-                Log.d(CourseListFragment.class.getName(), e.getMessage());
+                Log.d(CourseListFragment.class.getName(), "IO Exception " + e.getMessage());
             } catch (Exception e) {
                 Log.d(CourseListFragment.class.getName(), "" + e.getMessage());
             }
